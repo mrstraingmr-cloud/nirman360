@@ -1,0 +1,96 @@
+// Version: 1.0.0
+type ConstructionStep__281054008 =
+  {
+    activities : ?Text;
+    description : Text;
+    durationDays : Nat;
+    stageImageUrl : ?Text;
+    stageName : ?Text;
+    stageType : ?Text;
+    step : Nat
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DesignCategory__609111759 = DesignCategory__84329288;
+type DesignCategory__84329288 =
+  {#apartments; #custom; #dairyFarms; #residential; #smallBusiness};
+type DesignTier__753866659 = DesignTier__963340050;
+type DesignTier__963340050 = {#free; #premium; #ultraPremium};
+type Design__780050700 =
+  {
+    areaSqft : Nat;
+    bhk : ?Nat;
+    category : DesignCategory__609111759;
+    constructionSteps : [ConstructionStep__281054008];
+    createdAt : Timestamp__582943620;
+    description : Text;
+    estimatedCostMax : Nat;
+    estimatedCostMin : Nat;
+    floorPlanImageUrl : Text;
+    id : Nat;
+    materials : [Material__984024017];
+    previewImageUrl : Text;
+    tags : [Text];
+    tier : DesignTier__753866659;
+    title : Text
+  };
+type InquiryStatus__14405731 = {#pending; #responded; #reviewed};
+type InquiryStatus__304523662 = InquiryStatus__14405731;
+type Inquiry__992577949 =
+  {
+    budgetMax : Nat;
+    budgetMin : Nat;
+    createdAt : Timestamp__582943620;
+    description : Text;
+    email : Text;
+    id : Nat;
+    name : Text;
+    phone : Text;
+    projectType : Text;
+    var status : InquiryStatus__304523662;
+    submitterPrincipal : ?Principal
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Material__984024017 =
+  {costPerUnit : Nat; name : Text; quantity : Float; unit : Text};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Timestamp__301639476 = Int;
+type Timestamp__582943620 = Timestamp__301639476;
+type UserProfile__191096012 =
+  {
+    createdAt : Timestamp__582943620;
+    var displayName : Text;
+    var email : Text;
+    principal : Principal;
+    var savedDesignIds : [Nat];
+    var tier : UserTier__988162785
+  };
+type UserTier__529573935 = {#free; #premium; #ultraPremium};
+type UserTier__988162785 = UserTier__529573935;
+actor {
+  stable adminPrincipal : Principal;
+  stable designs :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Design__780050700]];
+      var elementIndex : Nat__490723111
+    };
+  stable inquiries :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Inquiry__992577949]];
+      var elementIndex : Nat__490723111
+    };
+  stable var nextDesignId : Nat;
+  stable var nextInquiryId : Nat;
+  stable users :
+    {
+      var root : Node__46230540<Principal, UserProfile__191096012>;
+      var size : Nat__490723111
+    }
+};

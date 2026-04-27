@@ -1,0 +1,193 @@
+type UserTier = 
+ variant {
+   free;
+   premium;
+   ultraPremium;
+ };
+type UserProfilePublic = 
+ record {
+   createdAt: Timestamp;
+   displayName: text;
+   email: text;
+   "principal": principal;
+   savedDesignIds: vec nat;
+   tier: UserTier;
+ };
+type UpdateProfileInput = 
+ record {
+   displayName: text;
+   email: text;
+ };
+type Timestamp = int;
+type SubmitInquiryInput = 
+ record {
+   budgetMax: nat;
+   budgetMin: nat;
+   description: text;
+   email: text;
+   name: text;
+   phone: text;
+   projectType: text;
+ };
+type Region = 
+ variant {
+   rural;
+   semiUrban;
+   urban;
+ };
+type MaterialGrade = 
+ variant {
+   basic;
+   premium;
+   standard;
+ };
+type Material = 
+ record {
+   costPerUnit: nat;
+   name: text;
+   quantity: float64;
+   unit: text;
+ };
+type InquiryStatus = 
+ variant {
+   pending;
+   responded;
+   reviewed;
+ };
+type InquiryPublic = 
+ record {
+   budgetMax: nat;
+   budgetMin: nat;
+   createdAt: Timestamp;
+   description: text;
+   email: text;
+   id: nat;
+   name: text;
+   phone: text;
+   projectType: text;
+   status: InquiryStatus;
+   submitterPrincipal: opt principal;
+ };
+type DesignTier = 
+ variant {
+   free;
+   premium;
+   ultraPremium;
+ };
+type DesignSummary = 
+ record {
+   areaSqft: nat;
+   bhk: opt nat;
+   category: DesignCategory;
+   createdAt: Timestamp;
+   estimatedCostMax: nat;
+   estimatedCostMin: nat;
+   id: nat;
+   previewImageUrl: text;
+   tags: vec text;
+   tier: DesignTier;
+   title: text;
+ };
+type DesignFilter = 
+ record {
+   category: opt DesignCategory;
+   tier: opt DesignTier;
+ };
+type DesignCategory = 
+ variant {
+   apartments;
+   custom;
+   dairyFarms;
+   residential;
+   smallBusiness;
+ };
+type Design = 
+ record {
+   areaSqft: nat;
+   bhk: opt nat;
+   category: DesignCategory;
+   constructionSteps: vec ConstructionStep;
+   createdAt: Timestamp;
+   description: text;
+   estimatedCostMax: nat;
+   estimatedCostMin: nat;
+   floorPlanImageUrl: text;
+   id: nat;
+   materials: vec Material;
+   previewImageUrl: text;
+   tags: vec text;
+   tier: DesignTier;
+   title: text;
+ };
+type CostCalculatorResult = 
+ record {
+   breakdown: CostBreakdown;
+   costPerSqft: nat;
+   totalCost: nat;
+ };
+type CostCalculatorInput = 
+ record {
+   areaSqft: nat;
+   materialGrade: MaterialGrade;
+   region: Region;
+ };
+type CostBreakdown = 
+ record {
+   electrical: nat;
+   finishing: nat;
+   flooring: nat;
+   foundation: nat;
+   plumbing: nat;
+   roofing: nat;
+   structure: nat;
+ };
+type ConstructionStep = 
+ record {
+   activities: opt text;
+   description: text;
+   durationDays: nat;
+   stageImageUrl: opt text;
+   stageName: opt text;
+   stageType: opt text;
+   step: nat;
+ };
+service : {
+  adminListAllInquiries: () -> (vec InquiryPublic) query;
+  adminSetUserTier: (target: principal, tier: UserTier) ->
+   (variant {
+      notAuthorized;
+      notFound;
+      ok;
+    });
+  adminUpdateInquiryStatus: (id: nat, status: InquiryStatus) ->
+   (variant {
+      notAuthorized;
+      notFound;
+      ok;
+    });
+  calculateCost: (input: CostCalculatorInput) -> (CostCalculatorResult) query;
+  getDesign: (id: nat) -> (opt Design) query;
+  getMyInquiries: () -> (vec InquiryPublic) query;
+  getMyProfile: () -> (opt UserProfilePublic) query;
+  getSavedDesigns: () -> (vec Design) query;
+  listDesigns: (filter: DesignFilter) -> (vec DesignSummary) query;
+  removeSavedDesign: (designId: nat) ->
+   (variant {
+      notAuthenticated;
+      notFound;
+      ok;
+    });
+  saveDesign: (designId: nat) ->
+   (variant {
+      limitReached;
+      notAuthenticated;
+      notFound;
+      ok;
+    });
+  submitInquiry: (input: SubmitInquiryInput) -> (InquiryPublic);
+  updateMyProfile: (input: UpdateProfileInput) ->
+   (variant {
+      notAuthenticated;
+      ok: UserProfilePublic;
+    });
+}

@@ -1,0 +1,28 @@
+{
+  "overview": "Nirman360 is a professional architectural platform for designing residential and commercial structures. It features a complete 3D Building Design System where users input plot details, building type, floors, and budget to get an interactive 3D model with step-by-step construction stages, material specifications, and dynamic cost estimation. The platform has tiered access (Free, Premium, Ultra Premium) with a full design catalog, cost calculator, and user dashboard.",
+  "features": [
+    "Interactive 3D Building Design System with React Three Fiber",
+    "Multi-step input form for plot size, location, building type, floors, budget, and style",
+    "360° rotatable 3D building model with zoom controls",
+    "Layer-by-layer construction stage visualization (Foundation, Structure, Electrical, Finishing, Interior)",
+    "Dynamic material specification with quantity estimates and brand suggestions",
+    "Real-time cost breakdown by material, labor, and finishing",
+    "Tiered access: Free (basic 3D), Premium (full stages + materials), Ultra Premium (full customization)",
+    "Design catalog with filters by category, tier, budget, and area",
+    "Interactive cost calculator by region and material grade",
+    "User dashboard with saved designs and inquiry tracking"
+  ],
+  "category": "architecture-construction",
+  "tags": [
+    "architecture",
+    "3d-design",
+    "construction",
+    "building-design",
+    "cost-estimation",
+    "three-js",
+    "india",
+    "residential",
+    "commercial"
+  ],
+  "last_updated": "2026-04-20T11:38:32.046Z"
+}

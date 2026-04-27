@@ -1,0 +1,373 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "DM Sans", sans-serif;
+    --font-body: "General Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.375rem;
+
+    --background: 0.98 0.01 270;
+    --foreground: 0.18 0.02 270;
+    --card: 0.99 0 0;
+    --card-foreground: 0.18 0.02 270;
+    --popover: 0.99 0 0;
+    --popover-foreground: 0.18 0.02 270;
+
+    --primary: 0.55 0.15 265;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.92 0.04 270;
+    --secondary-foreground: 0.25 0.01 270;
+    --muted: 0.92 0.04 270;
+    --muted-foreground: 0.52 0.02 270;
+
+    --accent: 0.62 0.18 32;
+    --accent-foreground: 0.99 0 0;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.9 0.01 270;
+    --input: 0.96 0.01 270;
+    --ring: 0.55 0.15 265;
+
+    --chart-1: 0.55 0.15 265;
+    --chart-2: 0.62 0.18 32;
+    --chart-3: 0.65 0.15 125;
+    --chart-4: 0.72 0.12 15;
+    --chart-5: 0.6 0.14 190;
+
+    --sidebar: 0.98 0.01 270;
+    --sidebar-foreground: 0.18 0.02 270;
+    --sidebar-primary: 0.55 0.15 265;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.92 0.04 270;
+    --sidebar-accent-foreground: 0.25 0.01 270;
+    --sidebar-border: 0.9 0.01 270;
+    --sidebar-ring: 0.55 0.15 265;
+  }
+
+  .dark {
+    --background: 0.13 0.01 270;
+    --foreground: 0.95 0.01 270;
+    --card: 0.16 0.01 270;
+    --card-foreground: 0.95 0.01 270;
+    --popover: 0.2 0.01 270;
+    --popover-foreground: 0.95 0.01 270;
+
+    --primary: 0.68 0.16 265;
+    --primary-foreground: 0.13 0.01 270;
+
+    --secondary: 0.22 0.02 270;
+    --secondary-foreground: 0.85 0.02 270;
+    --muted: 0.22 0.02 270;
+    --muted-foreground: 0.58 0.01 270;
+
+    --accent: 0.72 0.18 32;
+    --accent-foreground: 0.13 0.01 270;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.13 0.01 270;
+
+    --border: 0.25 0.01 270;
+    --input: 0.25 0.01 270;
+    --ring: 0.68 0.16 265;
+
+    --chart-1: 0.68 0.16 265;
+    --chart-2: 0.72 0.18 32;
+    --chart-3: 0.75 0.15 125;
+    --chart-4: 0.8 0.12 15;
+    --chart-5: 0.7 0.14 190;
+
+    --sidebar: 0.16 0.01 270;
+    --sidebar-foreground: 0.95 0.01 270;
+    --sidebar-primary: 0.68 0.16 265;
+    --sidebar-primary-foreground: 0.13 0.01 270;
+    --sidebar-accent: 0.22 0.02 270;
+    --sidebar-accent-foreground: 0.85 0.02 270;
+    --sidebar-border: 0.25 0.01 270;
+    --sidebar-ring: 0.68 0.16 265;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-canvas {
+    transition: all 0.6s cubic-bezier(0.3, 0, 0.4, 1);
+  }
+
+  .card-elevated {
+    @apply shadow-lg transition-smooth hover:shadow-xl hover:scale-105;
+  }
+
+  .card-interactive {
+    @apply cursor-pointer transition-smooth hover:border-accent;
+  }
+
+  .grid-auto-fit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  /* 3D Builder-specific utilities */
+  .panel-sidebar {
+    @apply bg-card border-border flex flex-col h-full overflow-y-auto transition-smooth;
+  }
+
+  .form-step {
+    @apply p-4 border-b border-border last:border-b-0;
+  }
+
+  .form-step-active {
+    @apply bg-muted/20 border-l-2 border-l-accent pl-3;
+  }
+
+  .material-item {
+    @apply p-3 bg-muted/30 rounded-md border border-border transition-smooth hover:bg-muted/50 hover:border-accent;
+  }
+
+  .cost-value {
+    @apply font-mono text-sm font-semibold text-accent;
+  }
+
+  .canvas-container {
+    @apply relative w-full h-full bg-background rounded-lg overflow-hidden transition-canvas;
+  }
+
+  .progress-dot {
+    @apply w-2 h-2 rounded-full transition-smooth;
+  }
+
+  .progress-dot-active {
+    @apply bg-accent scale-125;
+  }
+
+  .tier-badge {
+    @apply inline-block px-2 py-1 text-xs font-medium rounded text-foreground;
+  }
+
+  .tier-badge-free {
+    @apply bg-muted text-muted-foreground;
+  }
+
+  .tier-badge-premium {
+    @apply bg-primary/20 text-primary;
+  }
+
+  .tier-badge-ultra {
+    @apply bg-accent/20 text-accent;
+  }
+
+  .input-builder {
+    @apply w-full px-3 py-2 bg-input border border-border rounded-md text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-smooth;
+  }
+
+  .button-builder {
+    @apply px-4 py-2 rounded-md font-medium transition-smooth focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  }
+
+  .button-primary-builder {
+    @apply bg-primary text-primary-foreground hover:opacity-90;
+  }
+
+  .button-secondary-builder {
+    @apply bg-secondary text-secondary-foreground hover:opacity-90;
+  }
+
+  .button-accent-builder {
+    @apply bg-accent text-accent-foreground hover:opacity-90;
+  }
+
+  .stage-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1 text-sm font-medium bg-accent/10 text-accent rounded-full border border-accent/30;
+  }
+
+  .label-builder {
+    @apply block text-sm font-medium text-foreground mb-2;
+  }
+
+  .helper-text {
+    @apply text-xs text-muted-foreground mt-1;
+  }
+
+  /* Tier Card Styling */
+  .tier-card {
+    @apply relative rounded-lg border border-border bg-card p-6 transition-smooth hover:shadow-xl hover:scale-105;
+  }
+
+  .tier-card-premium {
+    @apply border-primary/30 shadow-lg;
+  }
+
+  .tier-card-ultra {
+    @apply border-accent/40 shadow-xl;
+  }
+
+  .tier-card-free {
+    @apply border-border;
+  }
+
+  /* Tier Badges with Icons */
+  .tier-badge-premium-full {
+    @apply inline-flex items-center gap-2 px-3 py-1 text-sm font-semibold bg-primary/10 text-primary rounded-full border border-primary/30 mb-4;
+  }
+
+  .tier-badge-ultra-full {
+    @apply inline-flex items-center gap-2 px-3 py-1 text-sm font-semibold bg-gradient-to-r from-accent to-accent/70 text-accent-foreground rounded-full border border-accent/40 mb-4;
+  }
+
+  .tier-badge-free-full {
+    @apply inline-flex items-center gap-2 px-3 py-1 text-sm font-medium bg-muted text-muted-foreground rounded-full border border-border mb-4;
+  }
+
+  /* Lock Icon for Tier-Gated Features */
+  .lock-icon {
+    @apply inline-block w-4 h-4 text-muted-foreground;
+  }
+
+  .lock-icon-premium {
+    @apply text-primary/60;
+  }
+
+  .lock-icon-ultra {
+    @apply text-accent/60;
+  }
+
+  /* Pricing Table Styling */
+  .pricing-table {
+    @apply w-full border-collapse;
+  }
+
+  .pricing-table th {
+    @apply text-left text-sm font-semibold text-foreground border-b border-border bg-muted/20 px-4 py-3;
+  }
+
+  .pricing-table td {
+    @apply text-sm text-foreground border-b border-border px-4 py-3;
+  }
+
+  .pricing-table tbody tr:hover {
+    @apply bg-muted/10;
+  }
+
+  /* Tier Comparison Cells */
+  .pricing-cell-included {
+    @apply text-accent font-semibold;
+  }
+
+  .pricing-cell-locked {
+    @apply text-muted-foreground opacity-60;
+  }
+
+  /* Upgrade Modal Overlay */
+  .upgrade-overlay {
+    @apply absolute inset-0 bg-muted/30 backdrop-blur-sm rounded-lg flex items-center justify-center transition-smooth;
+  }
+
+  .upgrade-cta {
+    @apply inline-flex flex-col items-center gap-3 px-6 py-4 bg-card border border-accent rounded-lg shadow-lg;
+  }
+
+  /* Feature Grid with Tier Indicators */
+  .feature-row {
+    @apply flex items-start gap-2 py-2;
+  }
+
+  .feature-icon {
+    @apply w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5;
+  }
+
+  .feature-icon-free {
+    @apply bg-muted text-muted-foreground;
+  }
+
+  .feature-icon-premium {
+    @apply bg-primary/20 text-primary;
+  }
+
+  .feature-icon-ultra {
+    @apply bg-accent/20 text-accent;
+  }
+
+  /* FAQ Accordion Item */
+  .faq-item {
+    @apply border-b border-border py-4 transition-smooth;
+  }
+
+  .faq-item:last-child {
+    @apply border-b-0;
+  }
+
+  .faq-trigger {
+    @apply w-full flex items-center justify-between cursor-pointer text-foreground font-medium hover:text-primary transition-smooth;
+  }
+
+  .faq-content {
+    @apply text-sm text-muted-foreground mt-3 leading-relaxed;
+  }
+
+  /* CTA Button Tier-Specific */
+  .cta-free {
+    @apply bg-muted text-muted-foreground hover:bg-muted/80;
+  }
+
+  .cta-premium {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .cta-ultra {
+    @apply bg-accent text-accent-foreground hover:bg-accent/90;
+  }
+
+  /* Pricing Badge Positioning */
+  .pricing-badge {
+    @apply absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 text-xs font-bold rounded-full border;
+  }
+
+  .pricing-badge-premium {
+    @apply bg-primary text-primary-foreground border-primary;
+  }
+
+  .pricing-badge-ultra {
+    @apply bg-gradient-to-r from-accent to-amber-600 text-white border-accent;
+  }
+}
